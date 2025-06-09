@@ -21,8 +21,7 @@ export const convert = (category, unitNameSrc, unitNameDest, value, roundToTwo =
         const firstPart = convert(category, unitNameSrc, unitDest.units[0], value, false);
         let secondPart = convert(category, unitDest.units[0], unitDest.units[1], firstPart % 1, false);
         // Clean
-        secondPart = secondPart.toString().replace('.', '');
-        newValue = Number.parseFloat(`${Math.floor(firstPart)}.${secondPart}`);
+        newValue = [Math.floor(firstPart), twoDecimals(secondPart)];
     } else {
         // If the source unity is not the reference, convert it to simplify
         if (!srcIsReference){
@@ -36,7 +35,7 @@ export const convert = (category, unitNameSrc, unitNameDest, value, roundToTwo =
     }
 
     // Round to 2 decimals
-    return roundToTwo ? twoDecimals(newValue) : newValue;
+    return roundToTwo && !unitDest.compositeUnits ? twoDecimals(newValue) : newValue;
 }
 
 /* https://stackoverflow.com/questions/14002113/how-to-simplify-a-decimal-into-the-smallest-possible-fraction */

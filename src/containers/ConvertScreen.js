@@ -42,7 +42,8 @@ const ConvertScreen = ({ navigation, conversionData }) => {
     }
 
     let unityValue = isReferenceUnit ? parseFloat(trueValue) : convert(conversionData, refUnit.name, item.name, trueValue);
-    if (isNaN(unityValue)) {
+    if (isNaN(unityValue) && !Array.isArray(unityValue) ||
+        Array.isArray(unityValue) && unityValue.some(v => isNaN(v))) {
       unityValue = '?';
     } else {
       if (item.isFraction) {
@@ -52,7 +53,7 @@ const ConvertScreen = ({ navigation, conversionData }) => {
           unityValue = fraction;
       } else if (item.compositeUnits) {
         let buildedValue = '';
-        unityValue.toString().split(/,|\./).forEach((val, idx) => {
+        unityValue.forEach((val, idx) => {
           buildedValue += `${val}${item.symbols[idx]}`;
         });
         unityValue = buildedValue

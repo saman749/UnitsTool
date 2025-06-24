@@ -17,7 +17,6 @@ const ConvertScreen = ({ navigation, conversionData }) => {
   const isInitialized = useRef(false);
   const [refUnit, setRefUnit] = useState(defaultUnit);
   const [value, setValue] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
   const [units, setUnits] = useState(conversionData.units);
   const { theme } = useTheme();
 
@@ -26,7 +25,6 @@ const ConvertScreen = ({ navigation, conversionData }) => {
   const onDragEnd = ({data}) => {
     setUnits(data);
     saveCategoryOrder(data);
-    setIsDragging(false);
   }
   
   const keyExtractor = (item, index) => item + index;
@@ -161,7 +159,6 @@ const ConvertScreen = ({ navigation, conversionData }) => {
             data={units}
             renderItem={renderItem}
             keyExtractor={keyExtractor}
-            onDragBegin={() => setIsDragging(true)}
             onDragEnd={onDragEnd}
           />
         </View>

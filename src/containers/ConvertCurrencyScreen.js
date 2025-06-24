@@ -10,7 +10,6 @@ import { Text, useTheme } from '@rneui/themed';
 import { convertCurrency, getEuropeanCentralBankRates } from '../utils/currencies';
 import { useTranslation } from 'react-i18next';
 import { fractionToNumber } from '../utils/conversion';
-import ShakingComponent from '../components/ShakingComponent';
 
 
 const ConvertCurrencyScreen = ({ navigation }) => {
@@ -41,7 +40,7 @@ const ConvertCurrencyScreen = ({ navigation }) => {
   
   const keyExtractor = (item, index) => item + index;
 
-  const renderItem = ({ item, drag, isActive }) => {
+  const renderItem = ({ item, drag }) => {
     const isReferenceUnit = item.iso == refUnit.iso;
 
     let trueValue = value;
@@ -63,14 +62,12 @@ const ConvertCurrencyScreen = ({ navigation }) => {
           activeOpacity={1}
           onLongPress={drag}
         >
-          <ShakingComponent active={isDragging && isActive}>
-            <ListUnitItem
-              unit={item}
-              value={unityValue}
-              isReferenceUnit={isReferenceUnit}
-              setRefUnit={saveCurrencyFavorite}
-            />
-          </ShakingComponent>
+          <ListUnitItem
+            unit={item}
+            value={unityValue}
+            isReferenceUnit={isReferenceUnit}
+            setRefUnit={saveCurrencyFavorite}
+          />
         </TouchableOpacity>
       </OpacityDecorator>
     );

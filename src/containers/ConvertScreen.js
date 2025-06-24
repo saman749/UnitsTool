@@ -6,7 +6,6 @@ import ListUnitItem from '../components/ListUnitItem';
 import { convert, fractionToNumber, getlowestfraction } from '../utils/conversion';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useTheme } from '@rneui/themed';
-import ShakingComponent from '../components/ShakingComponent';
 
 
 const ConvertScreen = ({ navigation, conversionData }) => {
@@ -18,7 +17,6 @@ const ConvertScreen = ({ navigation, conversionData }) => {
   const isInitialized = useRef(false);
   const [refUnit, setRefUnit] = useState(defaultUnit);
   const [value, setValue] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
   const [units, setUnits] = useState(conversionData.units);
   const { theme } = useTheme();
 
@@ -27,12 +25,11 @@ const ConvertScreen = ({ navigation, conversionData }) => {
   const onDragEnd = ({data}) => {
     setUnits(data);
     saveCategoryOrder(data);
-    setIsDragging(false);
   }
   
   const keyExtractor = (item, index) => item + index;
 
-  const renderItem = ({ item, drag, isActive }) => {
+  const renderItem = ({ item, drag }) => {
     const isReferenceUnit = (item.name == refUnit.name);
 
     let trueValue = value;
@@ -42,7 +39,8 @@ const ConvertScreen = ({ navigation, conversionData }) => {
     }
 
     let unityValue = isReferenceUnit ? parseFloat(trueValue) : convert(conversionData, refUnit.name, item.name, trueValue);
-    if (isNaN(unityValue)) {
+    if (isNaN(unityValue) && !Array.isArray(unityValue) ||
+        Array.isArray(unityValue) && unityValue.some(v => isNaN(v))) {
       unityValue = '?';
     } else {
       if (item.isFraction) {
@@ -52,9 +50,15 @@ const ConvertScreen = ({ navigation, conversionData }) => {
           unityValue = fraction;
       } else if (item.compositeUnits) {
         let buildedValue = '';
-        unityValue.toString().split(/,|\./).forEach((val, idx) => {
-          buildedValue += `${val}${item.symbols[idx]}`;
-        });
+        if (isReferenceUnit) {
+          unityValue.toString().split(/,|\./).forEach((val, idx) => {
+            buildedValue += `${val}${item.symbols[idx]}`;
+          });
+        } else {
+          unityValue.forEach((val, idx) => {
+            buildedValue += `${val}${item.symbols[idx]}`;
+          });
+        }
         unityValue = buildedValue
       } else {
         unityValue = unityValue.toLocaleString();
@@ -67,14 +71,12 @@ const ConvertScreen = ({ navigation, conversionData }) => {
           activeOpacity={1}
           onLongPress={drag}
         >
-          <ShakingComponent active={isDragging && isActive}>
-            <ListUnitItem
-              unit={item}
-              value={unityValue}
-              isReferenceUnit={isReferenceUnit}
-              setRefUnit={saveCategoryFavorite}
-            />
-          </ShakingComponent>
+          <ListUnitItem
+            unit={item}
+            value={unityValue}
+            isReferenceUnit={isReferenceUnit}
+            setRefUnit={saveCategoryFavorite}
+          />
         </TouchableOpacity>
       </OpacityDecorator>
     );
@@ -157,7 +159,6 @@ const ConvertScreen = ({ navigation, conversionData }) => {
             data={units}
             renderItem={renderItem}
             keyExtractor={keyExtractor}
-            onDragBegin={() => setIsDragging(true)}
             onDragEnd={onDragEnd}
           />
         </View>

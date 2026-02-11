@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DraggableFlatList, { OpacityDecorator } from 'react-native-draggable-flatlist';
 import UnitValue from '../components/UnitValue';
@@ -27,7 +27,7 @@ const ConvertScreen = ({ navigation, conversionData }) => {
     saveCategoryOrder(data);
   }
   
-  const keyExtractor = (item, index) => item + index;
+  const keyExtractor = (item, _index) => item.name;
 
   const renderItem = ({ item, drag }) => {
     const isReferenceUnit = (item.name == refUnit.name);

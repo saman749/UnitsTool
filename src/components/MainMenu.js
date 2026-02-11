@@ -1,4 +1,3 @@
-import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import translation from '../utils/translation.json';
 import { FlatList, View } from 'react-native';

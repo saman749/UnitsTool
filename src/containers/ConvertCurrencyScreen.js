@@ -1,15 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DraggableFlatList, { OpacityDecorator } from 'react-native-draggable-flatlist';
 import UnitValue from '../components/UnitValue';
 import ListUnitItem from '../components/ListUnitItem';
 import Snackbar from 'react-native-snackbar';
-import { RefreshControl } from 'react-native-gesture-handler';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text, useTheme } from '@rneui/themed';
 import { convertCurrency, getEuropeanCentralBankRates } from '../utils/currencies';
 import { useTranslation } from 'react-i18next';
 import { fractionToNumber } from '../utils/conversion';
+import { Button } from '@rneui/base';
+import { ActivityIndicator } from 'react-native';
 
 
 const ConvertCurrencyScreen = ({ navigation }) => {
@@ -19,7 +21,6 @@ const ConvertCurrencyScreen = ({ navigation }) => {
   const { t } = useTranslation();
   const isInitialized = useRef(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
   const [refUnit, setRefUnit] = useState(defaultUnit);
   const [value, setValue] = useState(0);
   const [fxRate, setFxRate] = useState({});
@@ -35,10 +36,9 @@ const ConvertCurrencyScreen = ({ navigation }) => {
 
     setFxRate(newFxRate);
     saveCurrencyOrder(data);
-    setIsDragging(false);
   }
   
-  const keyExtractor = (item, index) => item + index;
+  const keyExtractor = (item, _index) => item.iso;
 
   const renderItem = ({ item, drag }) => {
     const isReferenceUnit = item.iso == refUnit.iso;
@@ -205,20 +205,19 @@ const ConvertCurrencyScreen = ({ navigation }) => {
           setValue={setValue}
           unit={refUnit}
         />
-        <Text>{t('update')}: {fxRate.day} ({t('sourceECB')})</Text>
+        <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+          <Text>{t('update')}: {fxRate.day} ({t('sourceECB')})</Text>
+          <Button size='sm' type='clear' color={theme.colors.white} onPress={fetchFxRate} disabled={isRefreshing}>
+            <Icon name="sync" solid={false} size={24} color={theme.colors.primary}/>
+          </Button>
+        </View>
+        {isRefreshing && <ActivityIndicator size="large" />}
         <View style={{flex: 1, width: '100%'}}>
           <DraggableFlatList
             data={fxRate.rates ?? []}
-            refreshControl={
-              <RefreshControl
-                enabled={!isDragging}
-                onRefresh={fetchFxRate}
-                refreshing={isRefreshing}
-              />
-            }
+            refreshing={isRefreshing}
             renderItem={renderItem}
             keyExtractor={keyExtractor}
-            onDragBegin={() => setIsDragging(true)}
             onDragEnd={onDragEnd}
           />
         </View>

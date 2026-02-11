@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import ListCategoryItem from '../components/ListCategoryItem';
 import EmptyDataComponent from '../components/EmptyDataComponent';
 import { FlatList, StyleSheet, View } from 'react-native';

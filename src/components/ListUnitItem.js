@@ -1,4 +1,3 @@
-import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { ListItem, useTheme } from "@rneui/themed";
 import { Button } from '@rneui/base';

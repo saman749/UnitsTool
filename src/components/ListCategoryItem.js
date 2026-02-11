@@ -1,4 +1,3 @@
-import React from 'react';
 import { Icon } from "@rneui/themed";
 import { ListItem, Text, useTheme } from "@rneui/themed";
 import { useTranslation } from 'react-i18next';

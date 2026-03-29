@@ -242,5 +242,30 @@
         "icon": "coins",
         "reference": "EUR",
         "units": []
+    },
+    {
+        "category": "speed",
+        "title": "Speed",
+        "icon": "tachometer-alt",
+        "reference": "Meter per second",
+        "units": [
+            {
+                "name": "Meter per second",
+                "symbol": "m/s",
+                "formula": "* 1"
+            },
+            {
+                "name": "Kilometer per hour",
+                "symbol": "km/h",
+                "formula": "* 3.6",
+                "reverseFormula":"/ 3.6"
+            },
+            {
+                "name": "Mile per hour",
+                "symbol": "mph",
+                "formula": "* 2.23694",
+                "reverseFormula": "/ 2.23694"
+            }
+        ]
     }
 ]

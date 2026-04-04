@@ -8,6 +8,8 @@
         "update": "Update",
         "currencyInfoTitle": "Information",
         "currencyInfoMessage": "The data come from the European Central Bank and are updated once a day, except the weekend.\n\nYou need internet to get the data.",
-        "failToFetchCurrency": "Failed to get ECB rates.\nCheck your internet connection"
+        "failToFetchCurrency": "Failed to get ECB rates.\nCheck your internet connection",
+        "Contributors": "Contributors",
+        "thanks-to": "Thanks to"
     }
 }

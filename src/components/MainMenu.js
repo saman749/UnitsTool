@@ -4,6 +4,7 @@ import { FlatList, View } from 'react-native';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { Divider, Text, useTheme } from '@rneui/themed';
 import { useTranslation } from 'react-i18next';
+import { Alert } from 'react-native';
 
 
 const MainMenu = ({ currentLanguage, changeLanguage, darkMode, setDarkMode }) => {
@@ -26,6 +27,16 @@ const MainMenu = ({ currentLanguage, changeLanguage, darkMode, setDarkMode }) =>
           </MenuOption>
   }
 
+  const displayContributors = () => {
+      Alert.alert(
+        t('thanks-to'),
+        'Poussinou\nMannivu\nsaman749',
+        [
+          { text: "OK" }
+        ]
+      );
+    }
+
   return (
     <View>
       <Menu>
@@ -41,6 +52,12 @@ const MainMenu = ({ currentLanguage, changeLanguage, darkMode, setDarkMode }) =>
             <View style={{flexDirection: 'row'}}>
               <Icon name={darkMode ? 'sun' : 'moon'} size={28} color={theme.colors.black} solid/>
               <Text style={{fontSize: 24}}>{' '}{t(darkMode ? 'lightmode' : 'darkmode')}</Text>
+            </View>
+          </MenuOption>
+          <Divider/>
+          <MenuOption onSelect={displayContributors}>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={{fontSize: 22}}>{'🙏 '}{t('Contributors')}</Text>
             </View>
           </MenuOption>
         </MenuOptions>

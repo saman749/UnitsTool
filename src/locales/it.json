@@ -11,6 +11,8 @@
         "currencyInfoTitle": "Informazioni",
         "currencyInfoMessage": "I dati provengono dalla Banca Centrale Europea e sono aggiornati una volta al giorno, fine settimana esclusi.\n\nÈ necessaria una connessione a internet per l'aggiornamento.",
         "failToFetchCurrency": "Impossibile ottenere i tassi di conversione dalla BCE.\nVerificare la connessione",
+        "Contributors": "Collaboratori",
+        "thanks-to": "Ringraziamenti",
 
         "Distance": "Distanza",
         "Weight": "Piedi",

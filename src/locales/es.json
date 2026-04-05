@@ -22,6 +22,7 @@
         "Volume": "Volumen",
         "Chemistry": "Química",
         "Currency": "Divisa",
+        "Speed": "Velocidad",
 
         "Millimeter": "Milímetro",
         "Centimeter": "Centímetro",
@@ -73,6 +74,13 @@
         "Swiss franc": "Franco Suizo",
         "Mexican peso": "Peso Mexicano",
         "Australian dollar": "Dólar Australiano",
-        "Indian rupee": "Rupia India"
+        "Indian rupee": "Rupia India",
+
+        "Meter per second": "Metro por segundo",
+        "Kilometer per hour": "Kilómetro por hora",
+        "Mile per hour": "Milla por hora",
+        "Feet per second": "Pie por segundo",
+        "Kilometer per second": "Kilómetro por segundo",
+        "Knot": "Nudo"
     }
 }
